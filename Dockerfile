@@ -22,6 +22,7 @@ RUN apt update \
  && rm -rf /src /var/lib/apt/lists/*
 
 VOLUME /images
+VOLUME /recipes
 WORKDIR /images
 
 CMD /bin/bash

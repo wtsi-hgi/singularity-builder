@@ -1,2 +1,5 @@
 #!/usr/bin/env bash
-docker run -itv $(pwd)/images:/images mercury/singularity-builder singularity "$@"
+docker run -it \
+           -v $(pwd)/images:/images -v $(pwd)/recipes:/recipes \
+           mercury/singularity-builder \
+           singularity "$@"
