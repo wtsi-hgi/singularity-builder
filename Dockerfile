@@ -19,8 +19,11 @@ RUN apt update \
  && make install \
  && rm -rf /singularity-2.5.2 /var/lib/apt/lists/*
 
+VOLUME /cache
 VOLUME /images
 VOLUME /recipes
+
+ENV SINGULARITY_CACHEDIR /cache
 WORKDIR /images
 
 CMD /bin/bash
