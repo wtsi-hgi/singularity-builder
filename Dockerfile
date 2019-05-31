@@ -12,6 +12,7 @@ RUN apt update \
                    pkg-config \
                    squashfs-tools \
                    curl \
+                   debootstrap \
  && curl -L https://github.com/sylabs/singularity/releases/download/2.5.2/singularity-2.5.2.tar.gz | tar xz \
  && cd singularity-2.5.2 \
  && ./configure --prefix=/usr/local \
