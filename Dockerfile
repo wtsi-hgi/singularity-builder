@@ -10,6 +10,7 @@ RUN apt update \
                    pkg-config \
                    squashfs-tools \
                    curl \
+                   debootstrap \
  && mkdir -p /src/github.com/sylabs \
  && cd /src/github.com/sylabs \
  && curl -L https://github.com/sylabs/singularity/releases/download/v3.1.0/singularity-3.1.0.tar.gz | tar xz \
