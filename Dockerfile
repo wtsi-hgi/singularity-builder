@@ -1,26 +1,31 @@
 FROM ubuntu:latest
 
-RUN apt update \
+# Install apt packages
+RUN export DEBIAN_FRONTEND=noninteractive \
+ && apt update \
  && apt install -y build-essential \
-                   golang \
-                   libssl-dev \
-                   uuid-dev \
-                   libgpgme11-dev \
                    libseccomp-dev \
                    pkg-config \
                    squashfs-tools \
+                   cryptsetup \
+                   git \
                    curl \
-                   debootstrap \
- && mkdir -p /src/github.com/sylabs \
- && cd /src/github.com/sylabs \
- && curl -L https://github.com/sylabs/singularity/releases/download/v3.1.0/singularity-3.1.0.tar.gz | tar xz \
+                   debootstrap
+
+# Install Go, clone Singularity and build
+RUN curl -L https://dl.google.com/go/go1.13.15.linux-amd64.tar.gz \
+  | tar xzC /usr/local \
+ && export GOPATH=${HOME}/go \
+ && export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin \
+ && mkdir -p ${GOPATH}/src/github.com/sylabs \
+ && cd ${GOPATH}/src/github.com/sylabs \
+ && git clone https://github.com/sylabs/singularity.git \
  && cd singularity \
- && export GOPATH="/" \
+ && git checkout v3.6.4 \
  && ./mconfig \
- && cd builddir \
+ && cd ./builddir \
  && make \
- && make install \
- && rm -rf /src /var/lib/apt/lists/*
+ && make install
 
 VOLUME /cache
 VOLUME /images
